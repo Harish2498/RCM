@@ -6,6 +6,7 @@ import { createBrowserRouter, } from 'react-router-dom';
 // import Register from '../pages/Register';
 // import ForgotPassword from '../pages/ForgotPassword';
 import Homepage from '../pages/Homepage/index.jsx';
+import SearchByService from '../pages/SearchByService/index.jsx';
 
 
 // const navigate = useNavigate();
@@ -36,8 +37,12 @@ const router = createBrowserRouter([
 
     //HOMEPAGE
     {
+        // path: '/',
+        // element: <Homepage />
+    },
+    {
         path: '/',
-        element: <Homepage />
+        element: <SearchByService />
     }
 
 
