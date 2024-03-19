@@ -18,15 +18,16 @@ export default function Navbar() {
           <img src={IDSLogo} width={120} className="mr-10" />
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
-              className="  font-bold text-lg leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className="  font-bold text-sm leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/home"
-              style={location.pathname.includes('home') ? {fontSize:'25px'} : {}}
+              style={location.pathname.includes('home') ? { fontSize: '17px' } : {}}
             >
               Home
             </Link>
             <Link
-              className="  font-bold text-lg leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
-              to="/search-by-searvice"
+              className="  font-bold text-sm leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              to="/search-by-service"
+              style={location.pathname.includes('search-by-service') ? { fontSize: '17px' } : {}}
             >
               Search by Service
             </Link>
@@ -40,7 +41,7 @@ export default function Navbar() {
           </div>
           <div>
             <Avatar></Avatar>
-            
+
           </div>
           {/* <div
             className={
