@@ -1,21 +1,110 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import IDSLogo from "../../assets/IDS2.png"
-import { Avatar } from "antd";
+import { Avatar, Dropdown, Space } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
 
 
 export default function Navbar() {
-
   const location = useLocation();
-
-
+  const navigate = useNavigate();
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+
+
+  //this is for profile
+  const items = [
+    {
+      label: (
+        <div>
+          {/* <i class="ri-profile-fill "></i> {user?.empType.toUpperCase()} */}
+          <i className="ri-profile-fill "></i> Employee
+        </div>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <div
+          style={{
+            // height: "23vh",
+            width: "20vw",
+            backgroundColor: "rgb(0,33,64)",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ paddingTop: "1rem" }}>
+            {/* {user?.profileImage ? (
+              <img
+                src={user?.profileImage}
+                height="90px"
+                width="90px"
+                alt="Profile"
+                className="profile-image rounded-full"
+              />
+            ) : ( */}
+            <Avatar size={60} icon={<UserOutlined />} />
+            {/* )} */}
+          </div>
+          <h2 className="uppercase mt-2">
+            {/* {user?.firstName} {user?.lastName} */}
+            Anubhav Rana
+          </h2>
+          {/* <p style={{ marginBottom: "1rem" }}>{user?.email}</p> */}
+          <p style={{ marginBottom: "1rem" }}>anubhav.r@idsil.com</p>
+        </div>
+      ),
+      key: "1",
+    },
+    {
+      label: (
+        <div
+          // onClick={() => navigate("/userProfile")}
+          className="mt-2 uppercase"
+        >
+          <i className="ri-user-fill"></i> My Profile
+        </div>
+      ),
+      key: "3",
+    },
+    {
+      label: (
+        <div
+          onClick={() => navigate("/changePassword")}
+          className="mt-2 uppercase"
+        >
+          <i className="ri-lock-2-fill"></i> Change Password
+        </div>
+      ),
+      key: "4",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: (
+        <div
+          onClick={() => navigate("/")}
+          className="mt-2 uppercase  text-center"
+        >
+          <i className="ri-logout-circle-line"></i> Logout
+        </div >
+      ),
+      key: "5",
+    },
+  ];
+
   return (
     <>
-      <nav className="top-0 absolute z-50 bg-white w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg " style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.1)', position: 'fixed' }}>
-        <div className="container   flex flex-wrap items-center ">
-          <img src={IDSLogo} width={120} className="mr-10" />
+      <nav className="top-0 absolute z-50 bg-white w-full flex  flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg " style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.1)', position: 'fixed' }}>
+        <div className="container   flex  flex-wrap items-center  ">
+          {/* for logo */}
+          <div>
+            <img src={IDSLogo} width={120} className="mr-10" />
+          </div>
+
+          {/* for links */}
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
               className="  font-bold text-sm leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
@@ -40,74 +129,38 @@ export default function Navbar() {
             </button>
           </div>
           <div>
-            <Avatar></Avatar>
+
 
           </div>
-          {/* <div
-            className={
-              "lg:flex flex-grow items-center bg-white lg:bg-opacity-0 lg:shadow-none" +
-              (navbarOpen ? " block rounded shadow-lg" : " hidden")
-            }
-            id="example-navbar-warning"
+
+        </div>
+        {/* --------------------- FOR PROFILE----------------------- */}
+        <div style={{ borderleft: "1px solid grey" }}>
+          <Dropdown
+            placement="bottomRight"
+            menu={{
+              items,
+            }}
+            trigger={["click"]}
           >
-            <ul className="flex flex-col lg:flex-row list-none mr-auto">
-              <li className="flex items-center">
-                <a
-                  className="lg:text-black lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                  href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/notus?ref=nr-auth-navbar"
-                >
-                  <i className="lg:text-blueGray-200 text-blueGray-400 far fa-file-alt text-lg leading-lg mr-2" />{" "}
-                  Docs
-                </a>
-              </li>
-            </ul>
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="flex items-center">
-                <PagesDropdown />
-              </li>
-              <li className="flex items-center">
-                <a
-                  className="lg:text-black lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdemos.creative-tim.com%2Fnotus-react%2F%23%2F"
-                  target="_blank"
-                >
-                  <i className="lg:text-blueGray-200 text-blueGray-400 fab fa-facebook text-lg leading-lg " />
-                  <span className="lg:hidden inline-block ml-2">Share</span>
-                </a>
-              </li>
-
-              <li className="flex items-center">
-                <a
-                  className="lg:text-black lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                  href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fdemos.creative-tim.com%2Fnotus-react%2F%23%2F&text=Start%20your%20development%20with%20a%20Free%20Tailwind%20CSS%20and%20React%20UI%20Kit%20and%20Admin.%20Let%20Notus%20React%20amaze%20you%20with%20its%20cool%20features%20and%20build%20tools%20and%20get%20your%20project%20to%20a%20whole%20new%20level.%20"
-                  target="_blank"
-                >
-                  <i className="lg:text-blueGray-200 text-blueGray-400 fab fa-twitter text-lg leading-lg " />
-                  <span className="lg:hidden inline-block ml-2">Tweet</span>
-                </a>
-              </li>
-
-              <li className="flex items-center">
-                <a
-                  className="lg:text-black lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                  href="https://github.com/creativetimofficial/notus-react?ref=nr-auth-navbar"
-                  target="_blank"
-                >
-                  <i className="lg:text-blueGray-200 text-blueGray-400 fab fa-github text-lg leading-lg " />
-                  <span className="lg:hidden inline-block ml-2">Star</span>
-                </a>
-              </li>
-
-              <li className="flex items-center">
-                <button
-                  className="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  <i className="fas fa-arrow-alt-circle-down"></i> Download
-                </button>
-              </li>
-            </ul>
-          </div> */}
+            <a >
+              <Space className="hover:bg-gray-200 cursor-pointer p-2 uppercase ">
+                {/* {user?.profileImage ? (
+                      <img
+                        // src={`./profileImages/${user.profileImage}`}
+                        // src={user.profileImage}
+                        height="30px"
+                        width="30px"
+                        alt="Profile"
+                        className="profile-image rounded-full"
+                      />
+                    ) : ( */}
+                <Avatar size={30} icon={<UserOutlined />} />
+                {/* )} */}
+                <DownOutlined />
+              </Space>
+            </a>
+          </Dropdown>
         </div>
       </nav>
     </>
