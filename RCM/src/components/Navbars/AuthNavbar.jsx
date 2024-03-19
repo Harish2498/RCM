@@ -16,6 +16,7 @@ export default function Navbar() {
       <nav className="top-0 absolute z-50 bg-white w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg " style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.1)', position: 'fixed' }}>
         <div className="container   flex flex-wrap items-center ">
           <img src={IDSLogo} width={120} className="mr-10" />
+          
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
               className="  font-bold text-sm leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"

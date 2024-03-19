@@ -9,6 +9,9 @@ import { FallOutlined, HistoryOutlined, LineChartOutlined, RiseOutlined, TeamOut
 import Clock from "../../assets/clock.png"
 import Monitor from "../../assets/monitor.png"
 import Shuttle from "../../assets/shuttle.png"
+import Location from "../../assets/location.png"
+import Medicine from "../../assets/medicine.png"
+import Service from "../../assets/service.png"
 
 const { Title } = Typography
 
@@ -65,13 +68,13 @@ export default function Homepage() {
                         <h2 className="text-4xl font-semibold text-gray-500">9023902</h2>
                       </div>
                       <div className="flex items-center">
-                        <div className="text-white p-3 text-center inline-flex items-center text-3xl justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-400">
+                        <div className=" p-3 text-center inline-flex items-center text-purple-600 text-3xl justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-purple-200">
                           <TeamOutlined />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
+                      <span className=" text-green-500"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
                     </div>
                   </div>
@@ -89,13 +92,14 @@ export default function Homepage() {
                         <h2 className="text-4xl font-semibold text-gray-500">902</h2>
                       </div>
                       <div className="flex items-center">
-                        <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-400">
-                          <LineChartOutlined />
+                        <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-200">
+                          {/* <LineChartOutlined /> */}
+                          <img src={Service}/>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <span className=" text-red-300"> <FallOutlined /> 8.3% </span>
+                      <span className=" text-red-500"> <FallOutlined /> 8.3% </span>
                       <span>Down from Yesterday</span>
                     </div>
                   </div>
@@ -113,13 +117,14 @@ export default function Homepage() {
                         <h2 className="text-4xl font-semibold text-gray-500">2040</h2>
                       </div>
                       <div className="flex items-center">
-                        <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-400">
-                          <HistoryOutlined />
+                        <div className=" p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-orange-200">
+                          {/* <HistoryOutlined /> */}
+                          <img src={Location} />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
+                      <span className=" text-green-500"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
                     </div>
                   </div>
@@ -136,13 +141,14 @@ export default function Homepage() {
                         <h2 className="text-4xl font-semibold text-gray-500">204</h2>
                       </div>
                       <div className="flex items-center">
-                        <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-400">
-                          <LineChartOutlined />
+                        <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-200">
+                          {/* <LineChartOutlined /> */}
+                          <img src={Medicine} />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
+                      <span className=" text-green-500"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
                     </div>
                   </div>
@@ -170,8 +176,12 @@ export default function Homepage() {
                   <img
                     alt="..."
                     src={Clock}
-                    className=" w-20 mx-auto max-w-120-px"
+                    className="w-20 mx-auto max-w-120-px"
                   />
+
+
+
+
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">Monitoring 24/7</h5>
                     <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
@@ -279,8 +289,8 @@ export default function Homepage() {
 
             <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-lightBlue-500">
-              <Calendar fullscreen={false} />
-               
+                <Calendar fullscreen={false} />
+
               </div>
             </div>
           </div>
