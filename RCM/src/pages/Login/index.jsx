@@ -7,23 +7,23 @@ import { Link, useNavigate } from 'react-router-dom';
 // const { Title } = Typography;
 
 const Login = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const dispatch = useDispatch();
 
-  // const onFinish = (values) => {
-  //   console.log('Received values:', values);
-  //   // Hard-coded condition for username and password
-  //   if (values.email === 'demo@idsil.com' && values.password === '123456') {
-  //     // Redirect to '/home'
-  //     message.success('Login SuccessFull!')
-  //     navigate('/home')
-  //   } else {
-  //     message.error('Invalid email or password')
-  //   }
-  // };
+  const onFinish = (values) => {
+    console.log('Received values:', values);
+    // Hard-coded condition for username and password
+    if (values.email === 'demo@idsil.com' && values.password === '123456') {
+      // Redirect to '/home'
+      message.success('Login SuccessFull!')
+      navigate('/home')
+    } else {
+      message.error('Invalid email or password')
+    }
+  };
 
   return (
-    <section  className="  flex justify-center items-center">
+    <section className="  flex justify-center items-center">
       <div className="bg-gray-100 rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700 ">
         <div className="p-6 ">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900  dark:text-white">
@@ -31,7 +31,7 @@ const Login = () => {
           </h1>
           <Form
             className="login-form space-y-10 md:space-y-6 p-4 mt-4"
-            // onFinish={onFinish}
+            onFinish={onFinish}
           >
             <div>
               <Form.Item

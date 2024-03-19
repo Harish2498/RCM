@@ -1,6 +1,4 @@
-
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbars/AuthNavbar.jsx";
 import Footer from "../../components/Footers/Footer.jsx";
@@ -12,10 +10,30 @@ import Shuttle from "../../assets/shuttle.png"
 import Location from "../../assets/location.png"
 import Medicine from "../../assets/medicine.png"
 import Service from "../../assets/service.png"
+import { GetCardData } from "../../api-calls/home.jsx";
 
 const { Title } = Typography
 
+
+
 export default function Homepage() {
+  const [cardData, setCardData] = useState({})
+
+  const getData = async () => {
+
+    try {
+      const response = await GetCardData();
+      setCardData(response.data)
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  useEffect(() => {
+    getData();
+  })
   return (
     <>
       <Navbar />
@@ -58,14 +76,14 @@ export default function Homepage() {
           <div className="container mx-auto px-4 ">
             <div className="flex flex-wrap ">
               <div className=" pt-6 w-full md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Providers</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">9023902</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_providers}</h2>
                       </div>
                       <div className="flex items-center">
                         <div className=" p-3 text-center inline-flex items-center text-purple-600 text-3xl justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-purple-200">
@@ -73,48 +91,48 @@ export default function Homepage() {
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <span className=" text-green-500"> <RiseOutlined /> 8.3% </span>
+                    {/* <div>
+                      <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
 
               <div className="w-full pt-6 md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Services</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">902</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_services}</h2>
                       </div>
                       <div className="flex items-center">
                         <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-200">
                           {/* <LineChartOutlined /> */}
-                          <img src={Service}/>
+                          <img src={Service} />
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <span className=" text-red-500"> <FallOutlined /> 8.3% </span>
+                    {/* <div>
+                      <span className=" text-red-300"> <FallOutlined /> 8.3% </span>
                       <span>Down from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
 
               <div className="pt-6 w-full md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Locations</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">2040</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_cities}</h2>
                       </div>
                       <div className="flex items-center">
                         <div className=" p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-orange-200">
@@ -123,22 +141,22 @@ export default function Homepage() {
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <span className=" text-green-500"> <RiseOutlined /> 8.3% </span>
+                    {/* <div>
+                      <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
               <div className="pt-6 w-full md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Services(Drugs, Yes)</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">204</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_services_with_drug}</h2>
                       </div>
                       <div className="flex items-center">
                         <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-200">
@@ -147,10 +165,10 @@ export default function Homepage() {
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <span className=" text-green-500"> <RiseOutlined /> 8.3% </span>
+                    {/* <div>
+                      <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

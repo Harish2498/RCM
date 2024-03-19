@@ -25,4 +25,4 @@ class MedicareData(models.Model):
 
     class Meta:
         managed = True
-        db_table = "medicare_data"
+        db_table = "tbl_medicare_data"

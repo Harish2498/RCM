@@ -22,7 +22,9 @@ class Command(BaseCommand):
 
         with open(csv_file_path, 'r') as file:
             reader = csv.reader(file)
+            next(reader)
             for row in reader:
+
                 if MedicareData.objects.filter(serial_no = row[0]):
                     self.stdout.write(self.style.SUCCESS('Data already inserted'))
 
