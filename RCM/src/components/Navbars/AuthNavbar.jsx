@@ -14,15 +14,15 @@ export default function Navbar() {
 
   //this is for profile
   const items = [
-    {
-      label: (
-        <div>
-          {/* <i class="ri-profile-fill "></i> {user?.empType.toUpperCase()} */}
-          <i className="ri-profile-fill "></i> Employee
-        </div>
-      ),
-      key: "0",
-    },
+    // {
+    //   label: (
+    //     <div>
+    //       {/* <i class="ri-profile-fill "></i> {user?.empType.toUpperCase()} */}
+    //       <i className="ri-profile-fill "></i> Employee
+    //     </div>
+    //   ),
+    //   key: "0",
+    // },
     {
       label: (
         <div
@@ -68,17 +68,17 @@ export default function Navbar() {
       ),
       key: "3",
     },
-    {
-      label: (
-        <div
-          onClick={() => navigate("/changePassword")}
-          className="mt-2 uppercase"
-        >
-          <i className="ri-lock-2-fill"></i> Change Password
-        </div>
-      ),
-      key: "4",
-    },
+    // {
+    //   label: (
+    //     <div
+    //       onClick={() => navigate("/changePassword")}
+    //       className="mt-2 uppercase"
+    //     >
+    //       <i className="ri-lock-2-fill"></i> Change Password
+    //     </div>
+    //   ),
+    //   key: "4",
+    // },
     {
       type: "divider",
     },

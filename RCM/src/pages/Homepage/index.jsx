@@ -55,7 +55,7 @@ export default function Homepage() {
           <div className="container mx-auto px-4 ">
             <div className="flex flex-wrap ">
               <div className=" pt-6 w-full md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
@@ -70,16 +70,16 @@ export default function Homepage() {
                         </div>
                       </div>
                     </div>
-                    <div>
+                    {/* <div>
                       <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
 
               <div className="w-full pt-6 md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
@@ -94,16 +94,16 @@ export default function Homepage() {
                         </div>
                       </div>
                     </div>
-                    <div>
+                    {/* <div>
                       <span className=" text-red-300"> <FallOutlined /> 8.3% </span>
                       <span>Down from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
 
               <div className="pt-6 w-full md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
@@ -118,15 +118,15 @@ export default function Homepage() {
                         </div>
                       </div>
                     </div>
-                    <div>
+                    {/* <div>
                       <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
               <div className="pt-6 w-full md:w-3/12 px-4 text-center">
-                <div className=" relative h-60 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
                   {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
@@ -141,10 +141,10 @@ export default function Homepage() {
                         </div>
                       </div>
                     </div>
-                    <div>
+                    {/* <div>
                       <span className=" text-green-300"> <RiseOutlined /> 8.3% </span>
                       <span>Up from Yesterday</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
