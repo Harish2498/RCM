@@ -83,7 +83,7 @@ export default function Homepage() {
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Providers</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_providers}</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_providers || 0} </h2>
                       </div>
                       <div className="flex items-center">
                         <div className=" p-3 text-center inline-flex items-center text-purple-600 text-3xl justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-purple-200">
@@ -107,7 +107,7 @@ export default function Homepage() {
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Services</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_services}</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_services || 0}</h2>
                       </div>
                       <div className="flex items-center">
                         <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-200">
@@ -132,7 +132,7 @@ export default function Homepage() {
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Locations</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_cities}</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_unique_cities || 0}</h2>
                       </div>
                       <div className="flex items-center">
                         <div className=" p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-orange-200">
@@ -156,7 +156,7 @@ export default function Homepage() {
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
                         <h6 className="text-xl font-semibold text-gray-500">Total Services(Drugs, Yes)</h6>
-                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_services_with_drug}</h2>
+                        <h2 className="text-4xl font-semibold text-gray-500">{cardData.total_services_with_drug || 0}</h2>
                       </div>
                       <div className="flex items-center">
                         <div className="text-white p-3 text-center inline-flex text-3xl items-center justify-center w-16 h-16 mb-5 shadow-lg rounded-3xl bg-red-200">

@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'rcm_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'host_programing',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '28601',
+        'PASSWORD': 'login@123',
         'HOST': 'localhost',
         'PORT': '5432',
     }

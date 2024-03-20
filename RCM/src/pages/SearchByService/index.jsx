@@ -171,6 +171,11 @@ const data = [
 
 const SearchByService = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [services, setServices] = useState('');
+    const [locations, setLocations] = useState('');
+    const [cities, setCities] = useState('');
+    const [drugs, setDrugs] = useState('');
+    const [filteredData, setFilteredData] = useState(data);
 
     const onChange = (pagination, filters, sorter, extra, newSelectedRowKeys) => {
         console.log('params', pagination, filters, sorter, extra);
@@ -178,7 +183,15 @@ const SearchByService = () => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
-
+    const handleSearch = () => {
+        const newData = data.filter(item =>
+            item.name.toLowerCase().includes(services.toLowerCase()) &&
+            item.address.toLowerCase().includes(locations.toLowerCase()) &&
+            item.address.toLowerCase().includes(cities.toLowerCase()) &&
+            item.address.toLowerCase().includes(drugs.toLowerCase())
+        );
+        setFilteredData(newData);
+    };
 
     // const onSelectChange = (newSelectedRowKeys) => {
     //     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -241,37 +254,33 @@ const SearchByService = () => {
                     <div className='p-4 flex  ' style={{ border: "1px solid grey ", borderRadius: "4px", width: "58%" }}>
                         <div>
                             <Space.Compact size="large">
-                                <Input addonBefore={<SearchOutlined />} placeholder="Services" />
+                                <Input addonBefore={<SearchOutlined />} placeholder="Services" onChange={(e) => setServices(e.target.value)} />
                             </Space.Compact>
                         </div>
                         <div>
                             <Space.Compact size="large">
-                                <Input addonBefore={<EnvironmentOutlined />} placeholder="Locations" />
+                                <Input addonBefore={<EnvironmentOutlined />} placeholder="Locations" onChange={(e) => setLocations(e.target.value)} />
                             </Space.Compact>
                         </div>
                         <div>
                             <Space.Compact size="large" style={{ border: "none" }}>
-                                <Input style={{ border: "none" }} addonBefore={<EnvironmentOutlined />} placeholder="City" />
+                                <Input style={{ border: "none" }} addonBefore={<EnvironmentOutlined />} placeholder="City" onChange={(e) => setCities(e.target.value)} />
                             </Space.Compact>
                         </div>
                         <div>
                             <Space.Compact size="large">
-                                <Input addonBefore={<SearchOutlined />} placeholder="Drugs" />
+                                <Input addonBefore={<SearchOutlined />} placeholder="Drugs" onChange={(e) => setDrugs(e.target.value)} />
                             </Space.Compact>
                         </div>
                         <div>
-                            <Button style={{ backgroundColor: "rgb(29,78,216)", color: "white", marginLeft: "2px" }} size='large'>Search</Button>
+                            <Button style={{ backgroundColor: "rgb(29,78,216)", color: "white", marginLeft: "2px" }} size='large' onClick={handleSearch}>Search</Button>
                         </div>
                     </div>
                 </div>
 
-
-
-
-
-                {/* first table */}
+                {/* Table */}
                 <div className='bg-white m-10 p-5'>
-                    <Table rowSelection={rowSelection} columns={columns} dataSource={data} onChange={onChange} />
+                    <Table rowSelection={rowSelection} columns={columns} dataSource={filteredData} onChange={onChange} />
                 </div>
 
                 {/* for prompt */}
