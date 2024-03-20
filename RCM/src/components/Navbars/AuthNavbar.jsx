@@ -107,16 +107,16 @@ export default function Navbar() {
           {/* for links */}
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
-              className="  font-bold text-sm leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className="  font-bold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/home"
-              style={location.pathname.includes('home') ? { fontSize: '17px' } : {}}
+              style={location.pathname.includes('home') ? { textDecoration:'underline', color:'black' } : {}}
             >
               Home
             </Link>
             <Link
-              className="  font-bold text-sm leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className="  font-bold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/search-by-service"
-              style={location.pathname.includes('search-by-service') ? { fontSize: '17px' } : {}}
+              style={location.pathname.includes('search-by-service') ? { textDecoration:'underline',color:'black' } : {}}
             >
               Search by Service
             </Link>
