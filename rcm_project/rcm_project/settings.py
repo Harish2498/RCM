@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'data_analysis',
+    'service_recommender',
 ]
 
 MIDDLEWARE = [
