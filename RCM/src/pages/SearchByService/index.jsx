@@ -1,169 +1,122 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Input, Space, Table } from 'antd';
 import CardTable from '../../components/Cards/CardTable.jsx';
 import { EnvironmentOutlined, SearchOutlined } from '@ant-design/icons';
+import { GetSearchServiceData } from '../../api-calls/service.jsx';
 
 
 
 const columns = [
     {
-        title: 'Clinic/Hospital',
-        dataIndex: 'name',
-        filters: [
-            {
-                text: 'Joe',
-                value: 'Joe',
-            },
-            {
-                text: 'Category 1',
-                value: 'Category 1',
-            },
-            {
-                text: 'Category 2',
-                value: 'Category 2',
-            },
-        ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.name.startsWith(value),
+        title: 'Provider Name',
+        dataIndex: 'provider_last_org_name',
+        // filters: [
+        //     {
+        //         text: 'Joe',
+        //         value: 'Joe',
+        //     },
+        //     {
+        //         text: 'Category 1',
+        //         value: 'Category 1',
+        //     },
+        //     {
+        //         text: 'Category 2',
+        //         value: 'Category 2',
+        //     },
+        // ],
+        // filterMode: 'tree',
+        // filterSearch: true,
+        // onFilter: (value, record) => record.name.startsWith(value),
         width: '15%',
     },
     {
-        title: 'Provider',
-        dataIndex: 'age',
-        sorter: (a, b) => a.age - b.age,
+        title: 'Provider City',
+        dataIndex: 'provider_city',
+        // sorter: (a, b) => a.age - b.age,
         width: '12%',
     },
     {
-        title: 'Email',
-        dataIndex: 'address',
-        filters: [
-            {
-                text: 'London',
-                value: 'London',
-            },
-            {
-                text: 'New York',
-                value: 'New York',
-            },
-        ],
-        onFilter: (value, record) => record.address.startsWith(value),
-        filterSearch: true,
+        title: 'Service Code',
+        dataIndex: 'hcpcs_cd',
+        // filters: [
+        //     {
+        //         text: 'London',
+        //         value: 'London',
+        //     },
+        //     {
+        //         text: 'New York',
+        //         value: 'New York',
+        //     },
+        // ],
+        // onFilter: (value, record) => record.address.startsWith(value),
+        // filterSearch: true,
         width: '17%',
     },
     {
-        title: 'Phone',
-        dataIndex: 'address',
-        filters: [
-            {
-                text: 'London',
-                value: 'London',
-            },
-            {
-                text: 'New York',
-                value: 'New York',
-            },
-        ],
-        onFilter: (value, record) => record.address.startsWith(value),
-        filterSearch: true,
+        title: 'Services',
+        dataIndex: 'hcpcs_desc',
+        // filters: [
+        //     {
+        //         text: 'London',
+        //         value: 'London',
+        //     },
+        //     {
+        //         text: 'New York',
+        //         value: 'New York',
+        //     },
+        // ],
+        // onFilter: (value, record) => record.address.startsWith(value),
+        // filterSearch: true,
         width: '12%',
     },
     {
-        title: 'Date',
-        dataIndex: 'name',
-        filters: [
-            {
-                text: 'Joe',
-                value: 'Joe',
-            },
-            {
-                text: 'Category 1',
-                value: 'Category 1',
-            },
-            {
-                text: 'Category 2',
-                value: 'Category 2',
-            },
-        ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.name.startsWith(value),
+        title: 'Avergae Medicare Payment Amount',
+        dataIndex: 'avg_mdcr_alowd_amt',
+        // filters: [
+        //     {
+        //         text: 'Joe',
+        //         value: 'Joe',
+        //     },
+        //     {
+        //         text: 'Category 1',
+        //         value: 'Category 1',
+        //     },
+        //     {
+        //         text: 'Category 2',
+        //         value: 'Category 2',
+        //     },
+        // ],
+        // filterMode: 'tree',
+        // filterSearch: true,
+        // onFilter: (value, record) => record.name.startsWith(value),
         width: '12%',
     },
     {
-        title: 'Tag',
-        dataIndex: 'name',
-        filters: [
-            {
-                text: 'Joe',
-                value: 'Joe',
-            },
-            {
-                text: 'Category 1',
-                value: 'Category 1',
-            },
-            {
-                text: 'Category 2',
-                value: 'Category 2',
-            },
-        ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.name.startsWith(value),
+        title: 'Average Medicare Standardized Amount',
+        dataIndex: 'avg_mdcr_pymt_amt',
+        // filters: [
+        //     {
+        //         text: 'Joe',
+        //         value: 'Joe',
+        //     },
+        //     {
+        //         text: 'Category 1',
+        //         value: 'Category 1',
+        //     },
+        //     {
+        //         text: 'Category 2',
+        //         value: 'Category 2',
+        //     },
+        // ],
+        // filterMode: 'tree',
+        // filterSearch: true,
+        // onFilter: (value, record) => record.name.startsWith(value),
         width: '12%',
-    },
-    {
-        title: 'Location',
-        dataIndex: 'name',
-        filters: [
-            {
-                text: 'Joe',
-                value: 'Joe',
-            },
-            {
-                text: 'Category 1',
-                value: 'Category 1',
-            },
-            {
-                text: 'Category 2',
-                value: 'Category 2',
-            },
-        ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.name.startsWith(value),
-        width: '12%',
-    },
+    }
 ];
 
 
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-    },
-    {
-        key: '4',
-        name: 'Jim Red',
-        age: 32,
-        address: 'London No. 2 Lake Park',
-    },
-];
 
 
 
@@ -171,20 +124,29 @@ const data = [
 
 const SearchByService = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
+    const [services, setServices] = useState({ "user_req": "" });
+    const [locations, setLocations] = useState('');
+    const [cities, setCities] = useState('');
+    const [drugs, setDrugs] = useState('');
+    const [filteredData, setFilteredData] = useState(null);
     const onChange = (pagination, filters, sorter, extra, newSelectedRowKeys) => {
         console.log('params', pagination, filters, sorter, extra);
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
+    const handleSearch = async () => {
+        try {
+            const response = await GetSearchServiceData(services);
+            setFilteredData(response);
 
+        } catch (error) {
 
-
+        }
+    };
     // const onSelectChange = (newSelectedRowKeys) => {
     //     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     //     setSelectedRowKeys(newSelectedRowKeys);
     // };
-
     const rowSelection = {
         selectedRowKeys,
         onChange: onChange,
@@ -223,6 +185,9 @@ const SearchByService = () => {
         ],
     };
 
+    // useEffect(()=>{
+    //     getSearchedData()
+    // })
     return (
         <>
             <div className='bg-gray-100 p-10'>
@@ -235,68 +200,60 @@ const SearchByService = () => {
                         Some quick example text to build on the card title and make up the bulk of the card's content.
                     </p>
                 </div>
-
                 {/* Search input */}
                 <div className='flex justify-center p-2'>
                     <div className='p-4 flex  ' style={{ border: "1px solid grey ", borderRadius: "4px", width: "58%" }}>
                         <div>
                             <Space.Compact size="large">
-                                <Input addonBefore={<SearchOutlined />} placeholder="Services" />
+                                <Input addonBefore={<SearchOutlined />} placeholder="Services" onChange={(e) => setServices({ "user_req": e.target.value })} />
                             </Space.Compact>
                         </div>
                         <div>
                             <Space.Compact size="large">
-                                <Input addonBefore={<EnvironmentOutlined />} placeholder="Locations" />
+                                <Input addonBefore={<EnvironmentOutlined />} placeholder="Locations" onChange={(e) => setLocations(e.target.value)} />
                             </Space.Compact>
                         </div>
                         <div>
                             <Space.Compact size="large" style={{ border: "none" }}>
-                                <Input style={{ border: "none" }} addonBefore={<EnvironmentOutlined />} placeholder="City" />
+                                <Input style={{ border: "none" }} addonBefore={<EnvironmentOutlined />} placeholder="City" onChange={(e) => setCities(e.target.value)} />
                             </Space.Compact>
                         </div>
                         <div>
                             <Space.Compact size="large">
-                                <Input addonBefore={<SearchOutlined />} placeholder="Drugs" />
+                                <Input addonBefore={<SearchOutlined />} placeholder="Drugs" onChange={(e) => setDrugs(e.target.value)} />
                             </Space.Compact>
                         </div>
                         <div>
-                            <Button style={{ backgroundColor: "rgb(29,78,216)", color: "white", marginLeft: "2px" }} size='large'>Search</Button>
+                            <Button style={{ backgroundColor: "rgb(29,78,216)", color: "white", marginLeft: "2px" }} size='large' onClick={handleSearch}>Search</Button>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-                {/* first table */}
-                <div className='bg-white m-10 p-5'>
-                    <Table rowSelection={rowSelection} columns={columns} dataSource={data} onChange={onChange} />
-                </div>
-
-                {/* for prompt */}
-                <div className='p-4 '>
-                    <form className=" mx-auto w-full max-w-5xl ">
-                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                </svg>
+                {filteredData && <div>
+                    {/* Table */}
+                    <div className='bg-white m-10 p-5'>
+                        <Table  columns={columns} dataSource={filteredData} onChange={onChange} />
+                    </div>
+                    {/* for prompt */}
+                    <div className='p-4 '>
+                        <form className=" mx-auto w-full max-w-5xl ">
+                            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                </div>
+                                <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add Prompt" required />
+                                <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                             </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add Prompt" required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-                        </div>
-                    </form>
-                </div>
-
-                {/* Card Table  */}
-                <div className="w-full mt-10 px-4">
-                    <CardTable />
-                </div>
-
+                        </form>
+                    </div>
+                    {/* Card Table  */}
+                    <div className="w-full mt-10 px-4">
+                        <CardTable />
+                    </div>
+                </div>}
             </div>
-
         </>
     )
 }
