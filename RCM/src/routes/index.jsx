@@ -8,6 +8,9 @@ import ForgotPassword from '../pages/ForgotPassword';
 import Homepage from '../pages/Homepage/index.jsx';
 import MainLayout from '../pages/Layout/main-layout/index.jsx';
 import SearchByService from '../pages/SearchByService/index.jsx';
+import AnalyticalComparison from '../pages/AnalyticalComparison/index.jsx';
+import AboutUs from '../pages/AboutUs/index.jsx';
+import ContactUs from '../pages/ContactUs/index.jsx';
 
 
 // const navigate = useNavigate();
@@ -39,14 +42,26 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout />,
-        children:[
+        children: [
             {
-                path:'home',
-                element:<Homepage/>
+                path: 'home',
+                element: <Homepage />
             },
             {
-                path:'search-by-service',
-                element:<SearchByService/>
+                path: 'search-by-service',
+                element: <SearchByService />
+            },
+            {
+                path: 'analytical-comparison',
+                element: <AnalyticalComparison />
+            },
+            {
+                path: 'about-us',
+                element: <AboutUs />
+            },
+            {
+                path: 'contact-us',
+                element: <ContactUs />
             }
         ]
     }

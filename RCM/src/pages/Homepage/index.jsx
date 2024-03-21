@@ -34,52 +34,26 @@ export default function Homepage() {
 
   useEffect(() => {
     getData();
-  },[])
+  }, [])
   return (
     <>
       <Navbar />
       <main className=" z-10 mt-5">
+        {/* Top Statistics Heading Section */}
         <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
-          <div className="container relative mx-auto">
-            <div className="items-center flex flex-wrap">
-              <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-                <div className="pr-12">
-                  <h1 className=" text-5xl font-bold">
-                    Top Statistics
-                  </h1>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-            style={{ transform: "translateZ(0)" }}
-          >
-            <svg
-              className="absolute bottom-0 overflow-hidden"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x="0"
-              y="0"
-            >
-              <polygon
-                className="text-blueGray-200 fill-current"
-                points="2560 0 2560 100 0 100"
-              ></polygon>
-            </svg>
-          </div>
+          <h1 className=" text-5xl font-bold">
+            Top Statistics
+          </h1>
         </div>
 
-        <section className="pb-20 bg-blueGray-200 -mt-24">
-          <div className="container mx-auto px-4 ">
+        {/* 1st  Section (CARDs) */}
+        <section className="pb-20 bg-blueGray-200 -mt-24 flex flex-wrap"  >
+          <div className="container mx-auto px-4  " >
             <div className="flex flex-wrap ">
-              <div className=" pt-6 w-full md:w-3/12 px-4 text-center">
-                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
 
-                  {/* first div */}
+              {/* 1st card (TOTAL PROVIDER) */}
+              <div className=" pt-6 w-full md:w-3/12 min-w-3/12 px-4 text-center">
+                <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
@@ -99,11 +73,9 @@ export default function Homepage() {
                   </div>
                 </div>
               </div>
-
-              <div className="w-full pt-6 md:w-3/12 px-4 text-center">
+              {/* 2nd card (TOTAL SERVICES)*/}
+              <div className="w-full pt-6 md:w-3/12 min-w-3/12  px-4 text-center">
                 <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
-
-                  {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
@@ -124,11 +96,9 @@ export default function Homepage() {
                   </div>
                 </div>
               </div>
-
-              <div className="pt-6 w-full md:w-3/12 px-4 text-center">
+              {/* 3rd card (TOTAL LOCATIONS) */}
+              <div className="pt-6 w-full md:w-3/12 min-w-3/12  px-4 text-center">
                 <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
-
-                  {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
@@ -149,14 +119,13 @@ export default function Homepage() {
                   </div>
                 </div>
               </div>
-              <div className="pt-6 w-full md:w-3/12 px-4 text-center">
+              {/* 4th card  (TOTAL DRUGS SERVICES)*/}
+              <div className="pt-6 w-full md:w-3/12 min-w-3/12  px-4 text-center">
                 <div className=" relative h-45 flex flex-col  break-words  min-w-0  bg-white w-full  shadow-lg rounded-lg " style={{ border: '2px solid gray' }}>
-
-                  {/* first div */}
                   <div className="px-4 py-5 flex flex-col gap-10">
                     <div className="flex justify-between ">
                       <div className="flex flex-col gap-10 text-left">
-                        <h6 className="text-xl font-semibold text-gray-500">Total Services(Drugs, Yes)</h6>
+                        <h6 className="text-xl font-semibold text-gray-500"> Drugs Services</h6>
                         <h2 className="text-4xl font-semibold text-gray-500">{CounterUpAnimation(cardData.total_services_with_drug) || 0}</h2>
                       </div>
                       <div className="flex items-center">
@@ -177,6 +146,8 @@ export default function Homepage() {
 
           </div>
         </section>
+
+        {/* 2nd Section (MAIN-FEATURES) */}
         <section className="pt-20 pb-48">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center text-center mb-24">
@@ -245,6 +216,8 @@ export default function Homepage() {
             </div>
           </div>
         </section>
+
+        {/* 3rd Section (AUTOMATED REPORTS) */}
         <section className=" px-60 relative py-10">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
@@ -269,6 +242,8 @@ export default function Homepage() {
             </div>
           </div>
         </section>
+
+        {/* 4th Section  (FULLY CUSTOMISABLE) */}
         <section className=" px-60 relative py-10">
           <div className="flex flex-wrap items-center mt-32">
             <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
@@ -294,6 +269,8 @@ export default function Homepage() {
 
           </div>
         </section>
+
+        {/* 5th Section  (PROMPT BASED)*/}
         <section className=" px-60 relative py-10">
           <div className="flex flex-wrap items-center mt-32">
             <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
@@ -314,12 +291,6 @@ export default function Homepage() {
             </div>
           </div>
         </section>
-
-
-
-
-
-
       </main>
     </>
   );
