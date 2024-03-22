@@ -20,7 +20,18 @@ const ComparisonBarGraph = () => {
                 bar: {
                     horizontal: false,
                     columnWidth: '55%',
-                    endingShape: 'rounded'
+                    endingShape: 'rounded',
+                    colors: {
+                        ranges: [{
+                            // from: 0,
+                            // to: 50,
+                            color: '#FF0000' // Red color for values below 50
+                        }, {
+                            // from: 51,
+                            // to: 100,
+                            color: '#00FF00' // Green color for values above 50
+                        }]
+                    }
                 },
             },
             dataLabels: {
