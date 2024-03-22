@@ -97,7 +97,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="top-0 absolute z-50 bg-white w-full flex  flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg " style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.1)', position: 'fixed' }}>
+      <nav className="top-0 z-50 bg-white flex w-full items-center justify-between px-2 py-3 navbar-expand-lg " style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.1)', position: 'fixed' }}>
         <div className="container   flex  flex-wrap items-center  ">
           {/* for logo */}
           <div>
@@ -107,35 +107,35 @@ export default function Navbar() {
           {/* for links */}
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
-              className="  font-bold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className="   font-semibold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/home"
               style={location.pathname.includes('home') ? { textDecoration: 'underline', color: 'black' } : {}}
             >
               Home
             </Link>
             <Link
-              className="  font-bold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className="   font-semibold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/search-by-service"
               style={location.pathname.includes('search-by-service') ? { textDecoration: 'underline', color: 'black' } : {}}
             >
               Search by Service
             </Link>
             <Link
-              className="font-bold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className=" font-semibold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/analytical-comparison"
               style={location.pathname.includes('analytical-comparison') ? { textDecoration: 'underline', color: 'black' } : {}}
             >
               Analytical Comparison
             </Link>
             <Link
-              className="  font-bold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className="   font-semibold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/about-us"
               style={location.pathname.includes('about-us') ? { textDecoration: 'underline', color: 'black' } : {}}
             >
               About Us
             </Link>
             <Link
-              className="  font-bold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              className="   font-semibold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               to="/contact-us"
               style={location.pathname.includes('contact-us') ? { textDecoration: 'underline', color: 'black' } : {}}
             >
@@ -148,10 +148,6 @@ export default function Navbar() {
             >
               <i className=" fas fa-bars"></i>
             </button>
-          </div>
-          <div>
-
-
           </div>
 
         </div>
