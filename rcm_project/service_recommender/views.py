@@ -1,3 +1,5 @@
+
+
 import re
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -39,36 +41,35 @@ def requirement_based_recommender(dataset, user_req):
     input_vectors = tfidf_vectorizer.transform([cleaned_user_text])
     similarities = cosine_similarity(input_vectors, HCPCS_Desc_vectors)
 
-    # Create a list of dictionaries to hold the queryset data without including the similarity score
-    results_without_similarity = []
-    for index, row in enumerate(df_new):
-        result_dict = {
-            'provider_last_org_name': row.rndrng_prvdr_last_org_name,
-            'provider_city': row.rndrng_prvdr_city,
-            'hcpcs_cd': row.hcpcs_cd,
-            'hcpcs_desc': row.hcpcs_desc,
-            'avg_mdcr_pymt_amt': row.avg_mdcr_pymt_amt,
-            'avg_mdcr_stdzd_amt': row.avg_mdcr_stdzd_amt
-        }
-        results_without_similarity.append(result_dict)
+    # Create a DataFrame to hold the queryset data
+    df_results = pd.DataFrame(list(df_new.values()))
 
-    # Sort the list of dictionaries based on the similarity score in descending order
-    sorted_results = sorted(results_without_similarity, key=lambda x: similarities[0][index], reverse=True)
+    # Add the similarity scores to the DataFrame
+    df_results['similarity'] = similarities[0]
 
-    # Return only the top 10 results
-    return sorted_results[:10]
+    # Filter and sort the DataFrame based on the similarity score
+    recommended_providers = df_results[df_results['similarity'] >= 0.1].sort_values(by='similarity', ascending=False).head(10)
+
+    if recommended_providers.empty:
+        print("No providers available in the dataset for the given user request.")
+        return []
+    else:
+        return recommended_providers[[
+            'rndrng_prvdr_last_org_name', 'rndrng_prvdr_city', 'hcpcs_cd', 'hcpcs_desc',
+            'avg_mdcr_pymt_amt', 'avg_mdcr_stdzd_amt'
+        ]].to_dict(orient='records')
 
 class recommendation_api(APIView):
     def post(self, request, format=None):
-        user_req = request.data.get('user_req', '').strip() 
+        user_req = request.data.get('user_req', '').strip()
         if not user_req:
-            return Response({'error': 'enter the  user request'})
+            return Response({'error': 'Enter the user request'})
 
         results = requirement_based_recommender(MedicareData.objects.all(), user_req)
         if not results:
             return Response({'message': 'No results found based on the user requirements'})
+        
         return Response(results)
-  
 
 
 
@@ -164,3 +165,5 @@ class UniqueStateNames(APIView):
                 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                 'message': f"An error occurred: {str(e)}"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
