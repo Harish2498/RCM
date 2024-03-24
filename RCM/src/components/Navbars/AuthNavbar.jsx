@@ -118,7 +118,7 @@ export default function Navbar() {
               to="/search-by-service"
               style={location.pathname.includes('search-by-service') ? { textDecoration: 'underline', color: 'black' } : {}}
             >
-              Search by Service
+              Recommended Search
             </Link>
             <Link
               className=" font-semibold text-md text-gray-500 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"

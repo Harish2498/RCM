@@ -20,5 +20,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('data_analysis.urls')),
     path('api/', include('service_recommender.urls')),
-
 ]

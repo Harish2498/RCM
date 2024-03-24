@@ -8,12 +8,12 @@ const onChange = (key) => {
 const items = [
     {
         key: '1',
-        label: 'Search By Services',
+        label: 'Search by key word',
         children: <ByService />,
     },
     {
         key: '2',
-        label: 'Search By Location',
+        label: 'Personalized search',
         children: <ByLocation />,
     }
 ]
