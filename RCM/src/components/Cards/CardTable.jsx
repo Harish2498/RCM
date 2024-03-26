@@ -1,38 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Table } from "antd";
+import { Table, Dropdown, Menu } from "antd";
 import TableDropdown from "../Dropdowns/TableDropdown.jsx";
 
 const { Column } = Table;
 
-const CardTable = ({ color }) => {
-  const data = [
-    {
-      key: 1,
-      providerName: "iTest Factory",
-      providerCity: "Branded T-Shirts",
-      service: "Bags and Wallets",
-      amount: '$65740',
+const CardTable = ({ color, tableData, tableName }) => {
+  
 
-    },
-    {
-      key: 2,
-      providerName: "iTest Factory",
-      providerCity: "Branded T-Shirts",
-      service: "Bags and Wallets",
-      amount: '$65740',
-
-    },
-    {
-      key: 3,
-      providerName: "iTest Factory",
-      providerCity: "Branded T-Shirts",
-      service: "Bags and Wallets",
-      amount: '$65740',
-
-    },
-
-  ];
+  const renderDropdown = (items) => (
+    <Menu>
+      {items.map((item) => (
+        <Menu.Item key={item}>{item}</Menu.Item>
+      ))}
+    </Menu>
+  );
 
   return (
     <div className={`relative flex flex-col min-w-0 w-full mb-6 shadow-lg rounded border border-gray-300 p-2 `}>
@@ -45,17 +27,39 @@ const CardTable = ({ color }) => {
                 (color === "light" ? "text-white " : "text-blueGray-700")
               }
             >
-              Top Providers
+              {tableName}
             </h3>
           </div>
         </div>
       </div>
       <div className="block w-full overflow-x-auto">
-        <Table dataSource={data} bordered={false} showHeader={true}>
-          <Column title="Provider Name" dataIndex="providerName" key="providerName" />
-          <Column title="Provider City" dataIndex="providerCity" key="providerCity" />
-          <Column title="Service" dataIndex="service" key="service" />
-          <Column title="Amount" dataIndex="amount" key="amount" />
+        <Table dataSource={tableData} bordered={false} showHeader={true}>
+          <Column title="Provider Name" dataIndex="rndrng_prvdr_last_org_name" key="providerName" />
+          <Column
+            title="Provider Cities"
+            dataIndex="rndrng_prvdr_city"
+            key="providerCities"
+            render={(cities) => (
+              <Dropdown   overlay={renderDropdown(cities)}>
+                <a className="ant-dropdown-link " onClick={(e) => e.preventDefault()}>
+                  {cities.length} cities
+                </a>
+              </Dropdown>
+            )}
+          />
+          <Column
+            title="Services"
+            dataIndex="hcpcs_desc"
+            key="services"
+            render={(services) => (
+              <Dropdown overlay={renderDropdown(services)}>
+                <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+                  {services.length} services
+                </a>
+              </Dropdown>
+            )}
+          />
+          <Column title="Medicare Payout($)" dataIndex="total_revenue" key="amount" />
         </Table>
       </div>
     </div>

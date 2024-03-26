@@ -14,8 +14,8 @@
     "@popperjs/core": "^2.11.8",
     "antd": "^5.15.3",
     "axios": "^1.6.8",
-    "react": "^18.2.0",
-    "react-apexcharts": "^1.4.1",
+    "reacreact-apexchartst": "^18.2.0",
+    "": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3"
   },
