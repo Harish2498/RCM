@@ -1,5 +1,3 @@
-
-
 import re
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -74,11 +72,26 @@ class recommendation_api(APIView):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from data_analysis.models import MedicareData  # Importing the MedicareData model
+from data_analysis.models import MedicareData
+from .models import TopEarner, BottomEarner  
 import pandas as pd
+import numpy as np
 
 class TopAndBottomEarners(APIView):
     def get(self, request, format=None):
@@ -118,6 +131,30 @@ class TopAndBottomEarners(APIView):
             top_earners = df_top_rev_top.to_dict(orient='records')
             bottom_earners = df_top_rev_bottom.to_dict(orient='records')
 
+            # Save the data to TopEarner model
+            for earner in top_earners:
+                hcpcs_desc = earner['hcpcs_desc'].tolist()  # Convert ndarray to list
+                city = earner['rndrng_prvdr_city'].tolist()  # Convert ndarray to list
+                
+                TopEarner.objects.create(
+                    provider_name=earner['rndrng_prvdr_last_org_name'],
+                    hcpcs_desc=hcpcs_desc,
+                    city=city[0],
+                    total_revenue=earner['total_revenue']
+                )
+
+            # Save the data to BottomEarner model
+            for earner in bottom_earners:
+                hcpcs_desc = earner['hcpcs_desc'].tolist()  # Convert ndarray to list
+                city = earner['rndrng_prvdr_city'].tolist()  # Convert ndarray to list
+                
+                BottomEarner.objects.create(
+                    provider_name=earner['rndrng_prvdr_last_org_name'],
+                    hcpcs_desc=hcpcs_desc,
+                    city=city[0],
+                    total_revenue=earner['total_revenue']
+                )
+
             return Response({
                 'top_earners': top_earners,
                 'bottom_earners': bottom_earners
@@ -128,6 +165,15 @@ class TopAndBottomEarners(APIView):
                 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                 'message': f"An error occurred: {str(e)}"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+
+
+
+
+
 
 
 
@@ -167,3 +213,94 @@ class UniqueStateNames(APIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
+
+
+
+
+
+
+
+
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+import google.generativeai as genai
+import textwrap
+from .models import TopEarner, BottomEarner
+
+# Configure Google GenerativeAI API
+API_KEY = "AIzaSyCL6HnEvAmANH2JOt3twBOxllZHCMKPEYM"
+
+genai.configure(api_key=API_KEY)
+text_model = genai.GenerativeModel('gemini-pro')
+
+# Define a function to format response into Markdown
+def to_markdown(text):
+    text = text.replace('•', '  *')
+    return textwrap.indent(text, '> ', predicate=lambda _: True)
+
+def generate_response(question):
+    chat = text_model.start_chat()
+    response = chat.send_message(question)
+    return to_markdown(response.text)
+
+class DataAnalysisAPIView(APIView):
+    def get(self, request, format=None):
+        # Fetch data from the database using Django models
+        top_earner_data = list(TopEarner.objects.all().values())
+        bottom_earner_data = list(BottomEarner.objects.all().values())
+
+        # Ask questions in chat based on the first dataframe
+        top_earner_responses = []
+        for data in top_earner_data:
+            question_to_chat = f"Read the second dataframe. Give a detailed report of the information it contained based on cities, services it is providing, and revenue it is generating {data}?"
+            response_chat = generate_response(question_to_chat)
+            top_earner_responses.append(response_chat)
+
+        # Ask questions in chat based on the second dataframe
+        bottom_earner_responses = []
+        for data in bottom_earner_data:
+            question_to_chat_2 = "Write a detailed report on df2 which is the second dataframe. Give the report on the comparison of the cities generating high revenue and the cities generating low revenue on the basis of both dataframes. What services should low revenue generating cities start to increase the business? Elaborate the recommendations."
+            response_chat_2 = generate_response(question_to_chat_2)
+            bottom_earner_responses.append(response_chat_2)
+
+        context = {
+            'Report_response 1': top_earner_responses,
+            'Report_response 2': bottom_earner_responses,
+        }
+
+        return Response(context)
+
+
+
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from data_analysis.models import MedicareData
+
+class ExactMatchRecommender(APIView):
+    def get(self, request, format=None):
+        state = request.GET.get('state', None)
+
+        if not state:
+            return Response({"error": "Please provide a state parameter."}, status=status.HTTP_400_BAD_REQUEST)
+
+        cities = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state).values_list('rndrng_prvdr_city', flat=True).distinct()
+
+        if not cities.exists():
+            return Response({"error": f"No cities available for the state: {state}"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = []
+
+        for city in cities:
+            services = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state, rndrng_prvdr_city__iexact=city).values_list('hcpcs_desc', flat=True).distinct()
+            
+            data.append({
+                "city": city,
+                "services": list(services),
+            })
+
+        return Response({"cities_services": data}, status=status.HTTP_200_OK)
