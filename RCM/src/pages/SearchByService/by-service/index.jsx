@@ -8,12 +8,12 @@ import GlobalSearch from '../../../assets/global.gif'
 const columns = [
     {
         title: 'Provider Name',
-        dataIndex: 'provider_last_org_name',
+        dataIndex: 'rndrng_prvdr_last_org_name',
         width: '15%',
     },
     {
         title: 'Provider City',
-        dataIndex: 'provider_city',
+        dataIndex: 'rndrng_prvdr_city',
         width: '12%',
     },
     {
@@ -28,7 +28,7 @@ const columns = [
     },
     {
         title: 'Avergae Medicare Payment Amount',
-        dataIndex: 'avg_mdcr_alowd_amt',
+        dataIndex: 'avg_mdcr_stdzd_amt',
         width: '12%',
     },
     {
@@ -62,12 +62,13 @@ const ByService = () => {
         setLoading(true);
         try {
             const response = await GetSearchServiceData(services);
+            console.log(response);
             setTableData(response);
             setFilteredData(response);
 
             // Set provider name list and city list
-            const nameList = response.map((item) => ({ label: item.provider_last_org_name, value: item.provider_last_org_name }));
-            const cityList = response.map((item) => ({ label: item.provider_city, value: item.provider_city }));
+            const nameList = response.map((item) => ({ label: item.rndrng_prvdr_last_org_name, value: item.rndrng_prvdr_last_org_name }));
+            const cityList = response.map((item) => ({ label: item.rndrng_prvdr_city, value: item.rndrng_prvdr_city }));
             setProviderNameList(nameList);
             setProviderCityList(cityList);
 
@@ -81,10 +82,10 @@ const ByService = () => {
     const tableDataFilterFunction = () => {
         let filtered = tableData;
         if (selectedProviderName) {
-            filtered = filtered.filter((item) => item.provider_last_org_name === selectedProviderName)
+            filtered = filtered.filter((item) => item.rndrng_prvdr_last_org_name === selectedProviderName)
         }
         if (selectedProviderCity) {
-            filtered = filtered.filter((item) => item.provider_city === selectedProviderCity)
+            filtered = filtered.filter((item) => item.rndrng_prvdr_city === selectedProviderCity)
         }
         setFilteredData(filtered);
 
@@ -182,7 +183,7 @@ const ByService = () => {
                             <Table columns={columns} dataSource={filteredData} onChange={onChange} />
                         </div>
                         {/* for prompt */}
-                        <div className='p-4 '>
+                        {/* <div className='p-4 '>
                             <form className=" mx-auto w-full max-w-5xl ">
                                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                                 <div class="relative">
@@ -195,11 +196,11 @@ const ByService = () => {
                                     <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                                 </div>
                             </form>
-                        </div>
+                        </div> */}
                         {/* Card Table  */}
-                        <div className="w-full mt-10 px-4">
+                        {/* <div className="w-full mt-10 px-4">
                             <CardTable />
-                        </div>
+                        </div> */}
                     </div>
                 ) :
                     <div className='flex justify-center mt-4 '>

@@ -1,27 +1,95 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardTable from '../../components/Cards/CardTable';
 import ComparisonBarGraph from './comparisonBarGraph';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
+import { GetComparisionData } from '../../api-calls/comparision';
+
 
 const AnalyticalComparison = () => {
+    const [topEarners, setTopEarners] = useState(null)
+    const [bottomEarners, setBottomEarners] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [genAiData, setGenAiData] = useState();
+
+    const GetComparisionTableData = async () => {
+        try {
+            setLoading(true)
+            const response = await GetComparisionData();
+            setTopEarners(response.top_earners)
+            setBottomEarners(response.bottom_earners)
+            setLoading(false)
+        } catch (error) {
+            console.log(error);
+        }
+        finally {
+            setLoading(false)
+        }
+
+    }
+
+    const generateGenAiData = async () => {
+        const response = await GetGenAiData();
+
+    }
+
+    // useEffect(() => {
+    //     GetComparisionTableData();
+    // }, [])
 
     return (
         <>
             <div>
                 <div className='bg-gray-100 p-10'>
-                    {/* <div className=' m-5 p-5'>
+                    <div className=' m-5 p-5'>
                         <h1 style={{ fontSize: "3rem" }}>
                             Analytical Comparison
                         </h1>
-                        <p style={{ color: "rgb(136,148,166)", width: "60%" }}>
-                            Some quick example text to build on the card title and make up the bulk of the card's content.
-                            Some quick example text to build on the card title and make up the bulk of the card's content.
-                        </p> 
-                    </div>*/}
-                    <div>
+                        <p style={{ width: "60%" }} className=' text-gray-500 '>
+                            Click on below button for generating the detailed comparison between top ten providers and bottom ten providers.
+                        </p>
+                    </div>
+
+                    <div className='flex justify-center mt-10'>
+                        {/* <Button type="primary" onClick={() => window.print()}>Download Report</Button> */}
+                        <button type="submit" onClick={GetComparisionTableData} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Click here for comparison</button>
+                    </div>
+
+                    {loading && (
+                        <div className="flex justify-center items-center  mt-5">
+                            <Spin size="large" />
+                        </div>
+                    )}
+
+                    {(bottomEarners) && <div>
+
+                        {/* Card Table  */}
+                        <div className="flex mt-10 px-4">
+                            <CardTable tableData={topEarners} tableName={'Top Providers'} className='pr-2' />
+                            <div style={{ marginRight: '16px' }} /> {/* Adjust the margin-right value as needed */}
+                            <CardTable tableData={bottomEarners} tableName={'Bottom Providers'} />
+                        </div>
+
+                        {/* graph div */}
+                        <div>
+                            <h1 style={{ fontSize: "3rem", marginBottom: '1rem' }}>
+                                Graph Comparison
+                            </h1>
+                            <div className='flex gap-10'>
+                                <div className='w-1/2'>
+                                    <h1 className=' font-semibold'>Based on top Providers</h1>
+                                    <ComparisonBarGraph data={topEarners} />
+                                </div>
+                                <div className='w-1/2'>
+                                    <h1 className=' font-semibold'>Based on bottom Providers</h1>
+                                    <ComparisonBarGraph data={bottomEarners} />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* download buton */}
                         {/* for prompt */}
-                        <div className='p-4 mt-10'>
+                        {/* <div className='p-4 mt-10'>
                             <form className=" mx-auto w-full max-w-5xl ">
                                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                                 <div class="relative">
@@ -34,30 +102,12 @@ const AnalyticalComparison = () => {
                                     <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                                 </div>
                             </form>
-                        </div>
-                        {/* Card Table  */}
-                        <div className="flex mt-10 px-4">
-                            <CardTable className='pr-2' />
-                            <div style={{ marginRight: '16px' }} /> {/* Adjust the margin-right value as needed */}
-                            <CardTable />
-                        </div>
-
-                        {/* graph div */}
-                        <div>
-                            <h1 style={{ fontSize: "3rem", marginBottom: '1rem' }}>
-                                Graph Comparison
-                            </h1>
-                            <div>
-                                <ComparisonBarGraph />
-                            </div>
-                        </div>
-
-                        {/* download buton */}
+                        </div> */}
                         <div className='flex justify-center mt-10'>
                             {/* <Button type="primary" onClick={() => window.print()}>Download Report</Button> */}
-                            <button type="submit" onClick={() => window.print()} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Download Report</button>
+                            <button type="submit" onClick={generateGenAiData} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Generate Gen AI Report</button>
                         </div>
-                    </div>
+                    </div>}
 
                 </div>
             </div>
