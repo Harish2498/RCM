@@ -1,81 +1,3 @@
-// import React, { useState } from 'react';
-// import ReactApexChart from 'react-apexcharts';
-
-// const ComparisonBarGraph = ({ topEarners, bottomEarners }) => {
-//     const [chartData, setChartData] = useState({
-//         series: [{
-//             name: 'Top Providers ',
-//             data: topEarners.total_revenue
-//         }, {
-//             name: 'Bottom Providers',
-//             data: bottomEarners.total_revenue
-
-//         },
-//         ],
-//         options: {
-//             chart: {
-//                 type: 'bar',
-//                 height: 350
-//             },
-//             plotOptions: {
-//                 bar: {
-//                     horizontal: false,
-//                     columnWidth: '55%',
-//                     endingShape: 'rounded',
-//                     colors: {
-//                         ranges: [{
-//                             // from: 0,
-//                             // to: 50,
-//                             color: '#FF0000' // Red color for values below 50
-//                         }, {
-//                             // from: 51,
-//                             // to: 100,
-//                             color: '#00FF00' // Green color for values above 50
-//                         }]
-//                     }
-//                 },
-//             },
-//             dataLabels: {
-//                 enabled: false
-//             },
-//             stroke: {
-//                 show: true,
-//                 width: 2,
-//                 colors: ['transparent']
-//             },
-//             xaxis: {
-//                 categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-//             },
-//             yaxis: {
-//                 title: {
-//                     text: '$ (thousands)'
-//                 }
-//             },
-//             fill: {
-//                 opacity: 1
-//             },
-//             tooltip: {
-//                 y: {
-//                     formatter: function (val) {
-//                         return "$ " + val + " thousands"
-//                     }
-//                 }
-//             }
-//         }
-//     });
-
-//     return (
-//         <div>
-//             <div id="chart">
-//                 <ReactApexChart options={chartData.options} series={chartData.series} type="bar" height={350} />
-//             </div>
-//             <div id="html-dist"></div>
-//         </div>
-//     );
-// }
-
-// export default ComparisonBarGraph;
-
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
@@ -113,13 +35,15 @@ const Graph = ({ data }) => {
             colors: ['transparent']
         },
         xaxis: {
-            title:'Providers name',
+            title: 'Providers name',
             categories: chartData.map(item => item.x),
-            // labels: {
-            //     formatter: function (val) {
-            //         return val.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-            //     }
-            // }
+            labels: {
+                rotate: 270,
+                style: {
+                    fontSize: '12px',
+                    fontFamily: 'Arial, sans-serif'
+                }
+            }
         },
         yaxis: {
             title: {
@@ -128,26 +52,26 @@ const Graph = ({ data }) => {
         },
         tooltip: {
             y: {
-              formatter: function(val) {
-                return `$${val}`;
-              }
+                formatter: function (val) {
+                    return `$${val}`;
+                }
             },
-            custom: function({ seriesIndex, dataPointIndex, w }) {
-              const provider = w.globals.seriesX[0][dataPointIndex];
-              const revenue = w.globals.series[0][dataPointIndex];
-              const cities = w.config.series[0].data[dataPointIndex].cities;
-              const services = w.config.series[0].data[dataPointIndex].services;
-        
-              return `
-                <div class="apexcharts-tooltip">
-                  <div>Provider: ${provider}</div>
-                  <div>Revenue: $${revenue}</div>
-                  <div>Cities: ${cities}</div>
-                  <div>Services: ${services}</div>
-                </div>
-              `;
+            custom: function ({ seriesIndex, dataPointIndex }) {
+                const provider = chartData[dataPointIndex].x;
+                const revenue = chartData[dataPointIndex].y;
+                const cities = chartData[dataPointIndex].cities;
+                const services = chartData[dataPointIndex].services;
+
+                return `
+                    <div class="apexcharts-tooltip">
+                        <div>Provider: ${provider}</div>
+                        <div>Revenue: $${revenue}</div>
+                        <div>Total Cities: ${cities}</div>
+                        <div>Total Services: ${services}</div>
+                    </div>
+                `;
             }
-          }
+        }
     };
 
     // Series for the chart
@@ -161,4 +85,3 @@ const Graph = ({ data }) => {
 };
 
 export default Graph;
-

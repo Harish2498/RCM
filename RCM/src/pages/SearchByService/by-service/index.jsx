@@ -44,7 +44,7 @@ const ByService = () => {
     const [filteredData, setFilteredData] = useState(null);
     const [tableData, setTableData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null); // State to store error message
+    const [errorMessage, setErrorMessage] = useState(null);
 
     // Select list state
     const [providerNameList, setProviderNameList] = useState(null);
