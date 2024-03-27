@@ -8,10 +8,22 @@ const ContactUs = () => {
                     <h1 style={{ fontSize: "3rem" }}>
                         Contact Us
                     </h1>
-                    <p style={{ color: "rgb(136,148,166)", width: "60%" }}>
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                    </p>
+                    <pre style={{ color: "rgb(136,148,166)", width: "60%" }}>
+                        OFFICE ADDRESS :
+                        <br/>
+                        C-138, Phase VIII, Industrial Area, Mohali (India)
+                        <br/>
+                        info@idsil.com
+                        <br/>
+                        www.idsil.com
+                        <br/>
+                        (+91) 172 505 3601,
+                        <br/>
+                        (+91) 172 505 3602
+                        <br/>
+                        (+91) 172 509 8475
+                        
+                    </pre>
                 </div>
 
             </div>

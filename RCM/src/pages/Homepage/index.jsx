@@ -156,7 +156,8 @@ export default function Homepage() {
                   Main Features
                 </h1>
                 <p className="text-lg leading-relaxed text-center m-4 text-blueGray-500">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. In aperiam vel odit laboriosam praesentium nostrum hic commodi ab corporis similique expedita, dicta quod est distinctio amet facilis voluptatem modi! Aliquid quis saepe, provident quidem maxime hic corporis pariatur suscipit esse!
+                  This product aims to conduct a comprehensive analysis of service costs and reimbursements within the healthcare industry.
+                  The focus is on comparing average submitted charges, Medicare allowed amounts, and Medicare payment amounts to identify potential discrepancies and optimize cost-effectiveness.
                 </p>
               </div>
             </div>
@@ -173,9 +174,11 @@ export default function Homepage() {
 
 
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Monitoring 24/7</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas esse sint
+                    <h5 className="text-xl font-bold">Data Collection and Integration</h5>
+                    <p className="mt-1 text-sm text-blueGray-400  font-semibold">
+                      Extract relevant data from the CMS Medicare database.
+                      Collect provider and service data for integration.
+                      Cleanse and preprocess the data for consistency.
                     </p>
 
                   </div>
@@ -189,9 +192,11 @@ export default function Homepage() {
                     className=" w-20 mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Widget System</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas esse sint
+                    <h5 className="text-xl font-bold">Security and Privacy Measures</h5>
+                    <p className="mt-1 text-sm text-blueGray-400  font-semibold">
+                      Implement privacy measures for sensitive healthcare data.
+                      Ensure compliance with healthcare data privacy regulations.
+
                     </p>
                   </div>
                 </div>
@@ -204,9 +209,10 @@ export default function Homepage() {
                     className=" w-20 mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Best Performence</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas esse sint
+                    <h5 className="text-xl font-bold">Deliverables</h5>
+                    <p className="mt-1 text-sm text-blueGray-400  font-semibold">
+                      Integrated and cleansed healthcare dataset.
+                      Documentation on data collection and integration processes
                     </p>
 
                   </div>
@@ -218,7 +224,7 @@ export default function Homepage() {
         </section>
 
         {/* 3rd Section (AUTOMATED REPORTS) */}
-        <section className=" px-60 relative py-10">
+        {/* <section className=" px-60 relative py-10">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
 
@@ -241,10 +247,10 @@ export default function Homepage() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* 4th Section  (FULLY CUSTOMISABLE) */}
-        <section className=" px-60 relative py-10">
+        {/* <section className=" px-60 relative py-10">
           <div className="flex flex-wrap items-center mt-32">
             <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-lightBlue-500">
@@ -268,10 +274,10 @@ export default function Homepage() {
 
 
           </div>
-        </section>
+        </section> */}
 
         {/* 5th Section  (PROMPT BASED)*/}
-        <section className=" px-60 relative py-10">
+        {/* <section className=" px-60 relative py-10">
           <div className="flex flex-wrap items-center mt-32">
             <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
               <h3 className="text-5xl mb-2 font-bold leading-normal">
@@ -290,7 +296,7 @@ export default function Homepage() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
     </>
   );
