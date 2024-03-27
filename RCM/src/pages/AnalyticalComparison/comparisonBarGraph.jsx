@@ -14,7 +14,7 @@ const Graph = ({ data }) => {
     const options = {
         chart: {
             type: 'bar',
-            height: 600,
+            height: 1000,
             toolbar: {
                 show: false
             }
@@ -35,7 +35,10 @@ const Graph = ({ data }) => {
             colors: ['transparent']
         },
         xaxis: {
-            title: 'Providers name',
+            title: { text: 'Providers name' },
+            // labels: {
+            //     rotate: -90
+            //   },
             categories: chartData.map(item => item.x),
             labels: {
                 rotate: 270,
@@ -56,31 +59,34 @@ const Graph = ({ data }) => {
                     return `$${val}`;
                 }
             },
-            custom: function ({ seriesIndex, dataPointIndex }) {
-                const provider = chartData[dataPointIndex].x;
-                const revenue = chartData[dataPointIndex].y;
-                const cities = chartData[dataPointIndex].cities;
-                const services = chartData[dataPointIndex].services;
+            // custom: function ({ seriesIndex, dataPointIndex, w }) {
+            //     const provider = w.globals.seriesX[0][dataPointIndex];
+            //     const revenue = w.globals.series[0][dataPointIndex];
+            //     const cities = w.config.series[0].data[dataPointIndex].cities;
+            //     const services = w.config.series[0].data[dataPointIndex].services;
 
-                return `
-                    <div class="apexcharts-tooltip">
-                        <div>Provider: ${provider}</div>
-                        <div>Revenue: $${revenue}</div>
-                        <div>Total Cities: ${cities}</div>
-                        <div>Total Services: ${services}</div>
-                    </div>
-                `;
-            }
+            //     return `
+            //     <div class="apexcharts-tooltip">
+            //       <div>Provider: ${provider}</div>
+            //       <div>Revenue: $${revenue}</div>
+            //       <div>Cities: ${cities}</div>
+            //       <div>Services: ${services}</div>
+            //     </div>
+            //   `;
+            // }
         }
     };
 
     // Series for the chart
     const series = [{
+        name:'Medicare Payout($)',
         data: chartData.map(item => item.y)
     }];
 
     return (
-        <ReactApexChart options={options} series={series} type="bar" height={350} />
+        <div>
+            <ReactApexChart options={options} series={series} type="bar" height={350} />
+        </div>
     );
 };
 

@@ -4,7 +4,6 @@ import CardTable from '../../../components/Cards/CardTable.jsx';
 import { EnvironmentOutlined, SearchOutlined } from '@ant-design/icons';
 import { GetSearchServiceData } from '../../../api-calls/service.jsx';
 import GlobalSearch from '../../../assets/global.gif';
-
 const columns = [
     {
         title: 'Provider Name',
@@ -37,7 +36,6 @@ const columns = [
         width: '12%',
     },
 ];
-
 const ByService = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [services, setServices] = useState({ user_req: '' });
@@ -45,23 +43,19 @@ const ByService = () => {
     const [tableData, setTableData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-
     // Select list state
     const [providerNameList, setProviderNameList] = useState(null);
     const [providerCityList, setProviderCityList] = useState(null);
     const [selectedProviderName, setSelectedProviderName] = useState(null);
     const [selectedProviderCity, setSelectedProviderCity] = useState(null);
-
     const onChange = (pagination, filters, sorter, extra, newSelectedRowKeys) => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
-
     const handleSearch = async () => {
         setLoading(true);
         try {
             const response = await GetSearchServiceData(services);
             console.log(response);
-
             if (response.message) {
                 setErrorMessage(response.message); // Set error message
                 setTableData(null); // Clear table data in case of error
@@ -69,7 +63,6 @@ const ByService = () => {
             } else {
                 setTableData(response);
                 setFilteredData(response);
-
                 // Set provider name list and city list
                 const nameList = response.map((item) => ({
                     label: item.rndrng_prvdr_last_org_name,
@@ -81,7 +74,6 @@ const ByService = () => {
                 }));
                 setProviderNameList(nameList);
                 setProviderCityList(cityList);
-
                 // Clear error message if data is successfully fetched
                 setErrorMessage(null);
             }
@@ -93,7 +85,6 @@ const ByService = () => {
             setLoading(false);
         }
     };
-
     const tableDataFilterFunction = () => {
         let filtered = tableData;
         if (selectedProviderName) {
@@ -104,21 +95,17 @@ const ByService = () => {
         }
         setFilteredData(filtered);
     };
-
     const onSearch = (value, dataIndex) => {
         const filtered = tableData.filter(
             (item) => item[dataIndex] && item[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
         );
         setFilteredData(filtered);
     };
-
     const filterOption = (inputValue, option) =>
         option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
-
     useEffect(() => {
         tableDataFilterFunction();
     }, [selectedProviderName, selectedProviderCity]);
-
     return (
         <>
             <div className="bg-gray-100 p-10">
@@ -200,5 +187,4 @@ const ByService = () => {
         </>
     );
 };
-
 export default ByService;

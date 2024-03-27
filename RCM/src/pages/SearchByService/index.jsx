@@ -13,7 +13,8 @@ const items = [
     },
     {
         key: '2',
-        label: 'Personalized search',
+        label: 'Selective search',
+        // children: <div className='flex justify-center items-center h-96'><h1 className='text-xl'>Work in progress</h1></div>,
         children: <ByLocation />,
     }
 ]

@@ -9,8 +9,7 @@ const AboutUs = () => {
             About Us
           </h1>
           <p style={{ color: "rgb(136,148,166)", width: "60%" }}>
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-            Some quick example text to build on the card title and make up the bulk of the card's content.
+          IDS Infotech Limited uses a seamless global delivery network and extensive domain expertise to help any type of business achieve rapid and sustainable cost savings, improve cash flow and drive top-line growth
           </p>
         </div>
 
