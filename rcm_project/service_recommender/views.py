@@ -165,21 +165,7 @@ class TopAndBottomEarners(APIView):
                 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                 'message': f"An error occurred: {str(e)}"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -212,65 +198,27 @@ class UniqueStateNames(APIView):
                 'message': f"An error occurred: {str(e)}"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-
-
-
-
-
-
-
-
-
-
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import google.generativeai as genai
-import textwrap
-from .models import TopEarner, BottomEarner
+from rest_framework import status
+from data_analysis.models import MedicareData
 
-# Configure Google GenerativeAI API
-API_KEY = "AIzaSyCL6HnEvAmANH2JOt3twBOxllZHCMKPEYM"
-
-genai.configure(api_key=API_KEY)
-text_model = genai.GenerativeModel('gemini-pro')
-
-# Define a function to format response into Markdown
-def to_markdown(text):
-    text = text.replace('•', '  *')
-    return textwrap.indent(text, '> ', predicate=lambda _: True)
-
-def generate_response(question):
-    chat = text_model.start_chat()
-    response = chat.send_message(question)
-    return to_markdown(response.text)
-
-class DataAnalysisAPIView(APIView):
+class ExactMatchRecommender(APIView):
     def get(self, request, format=None):
-        # Fetch data from the database using Django models
-        top_earner_data = list(TopEarner.objects.all().values())
-        bottom_earner_data = list(BottomEarner.objects.all().values())
-
-        # Ask questions in chat based on the first dataframe
-        top_earner_responses = []
-        for data in top_earner_data:
-            question_to_chat = f"Read the second dataframe. Give a detailed report of the information it contained based on cities, services it is providing, and revenue it is generating {data}?"
-            response_chat = generate_response(question_to_chat)
-            top_earner_responses.append(response_chat)
-
-        # Ask questions in chat based on the second dataframe
-        bottom_earner_responses = []
-        for data in bottom_earner_data:
-            question_to_chat_2 = "Write a detailed report on df2 which is the second dataframe. Give the report on the comparison of the cities generating high revenue and the cities generating low revenue on the basis of both dataframes. What services should low revenue generating cities start to increase the business? Elaborate the recommendations."
-            response_chat_2 = generate_response(question_to_chat_2)
-            bottom_earner_responses.append(response_chat_2)
-
-        context = {
-            'Report_response 1': top_earner_responses,
-            'Report_response 2': bottom_earner_responses,
-        }
-
-        return Response(context)
+        state = request.GET.get('state', None)
+        if not state:
+            return Response({"error": "Please provide a state parameter."}, status=status.HTTP_400_BAD_REQUEST)
+        cities = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state).values_list('rndrng_prvdr_city', flat=True).distinct()
+        if not cities.exists():
+            return Response({"error": f"No cities available for the state: {state}"}, status=status.HTTP_404_NOT_FOUND)
+        data = []
+        for city in cities:
+            services = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state, rndrng_prvdr_city__iexact=city).values_list('hcpcs_desc', flat=True).distinct()  
+            data.append({
+                "city": city,
+                "services": list(services),
+            })
+        return Response({"cities_services": data}, status=status.HTTP_200_OK)
 
 
 
@@ -281,26 +229,151 @@ from rest_framework.response import Response
 from rest_framework import status
 from data_analysis.models import MedicareData
 
-class ExactMatchRecommender(APIView):
+class MedicareDataAPIView(APIView):
     def get(self, request, format=None):
+        # Get all unique states from the database
+        states = MedicareData.objects.values_list('rndrng_prvdr_state_abrvtn', flat=True).distinct().order_by('rndrng_prvdr_state_abrvtn')
+
+        # If no specific state is provided, return all states
+        if 'state' not in request.GET and 'city' not in request.GET:
+            return Response({"states": list(states)}, status=status.HTTP_200_OK)
+
         state = request.GET.get('state', None)
+        city = request.GET.get('city', None)
 
         if not state:
             return Response({"error": "Please provide a state parameter."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Count the number of times the state appears in the database
+        state_count = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state).count()
+        
+        if state_count == 0:
+            return Response({"error": f"No data available for the state: {state}"}, status=status.HTTP_404_NOT_FOUND)
 
         cities = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state).values_list('rndrng_prvdr_city', flat=True).distinct()
 
-        if not cities.exists():
-            return Response({"error": f"No cities available for the state: {state}"}, status=status.HTTP_404_NOT_FOUND)
+        if city:
+            print(request.GET.get("selected_service"))
 
-        data = []
+            city_services = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state, rndrng_prvdr_city__iexact=city).values_list('hcpcs_desc', flat=True).distinct()
+            services = list(city_services)
+            cities = [city]*len(services)
+            if request.GET.get("selected_service"):
+                srv = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state, rndrng_prvdr_city__iexact=city,hcpcs_desc__icontains = request.GET.get("selected_service")).last()
+                print(srv,">>>>>>>>>")
+                services ={
+                        "rndrng_prvdr_last_org_name": srv.rndrng_prvdr_last_org_name,
+                        "rndrng_prvdr_city": srv.rndrng_prvdr_city,
+                        "hcpcs_cd": srv.hcpcs_cd,
+                        "hcpcs_desc": srv.hcpcs_desc,
+                        "avg_mdcr_pymt_amt": srv.avg_mdcr_pymt_amt,
+                        "avg_mdcr_stdzd_amt": srv.avg_mdcr_stdzd_amt
+                }
 
-        for city in cities:
-            services = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state, rndrng_prvdr_city__iexact=city).values_list('hcpcs_desc', flat=True).distinct()
-            
-            data.append({
-                "city": city,
-                "services": list(services),
-            })
+        else:
+            services = []
+            for city_name in cities:
+                city_services = MedicareData.objects.filter(rndrng_prvdr_state_abrvtn__iexact=state, rndrng_prvdr_city__iexact=city_name).values_list('hcpcs_desc', flat=True).distinct()
+                services.extend(list(city_services))
+        
+        return Response({"state": [state]*state_count, "cities": list(cities), "services": services}, status=status.HTTP_200_OK)
 
-        return Response({"cities_services": data}, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# import pandas as pd
+# import google.generativeai as genai
+# from IPython.display import Markdown
+# import textwrap
+# from .models import BottomEarner, TopEarner  # Import the models
+# import numpy as np
+
+# def to_markdown(text):
+#     text = text.replace('•', '  *')
+#     return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+# @csrf_exempt
+# def generate_reports(request):
+#     if request.method == "GET":
+#         # try:
+#         API_KEY = "AIzaSyCL6HnEvAmANH2JOt3twBOxllZHCMKPEYM"
+#         genai.configure(api_key=API_KEY)
+#         text_model = genai.GenerativeModel('gemini-pro')
+#         bottom_earners = BottomEarner.objects.all()  # Fetch data from the database
+#         chat = text_model.start_chat()
+#         responses = []
+#         responses2 = []
+
+#         for obj in bottom_earners:
+#             dts = {'Rndrng_Prvdr_Last_Org_Name':obj.provider_name, 'HCPCS_Desc':', '.join(obj.hcpcs_desc) , 'Rndrng_Prvdr_City':obj.city, 'total_revenue':obj.total_revenue }
+#             question_to_chat = f": Read the second dataframe. Give a detailed report of the information it contained based on cities, services it is providing, and revenue it is generating {dts}. Print only the name of the city generating the lowest revenue. Do not print the details.?"
+#             try:
+#                 response_chat = chat.send_message(question_to_chat)
+#                 print(response_chat.text)
+#                 responses.append(response_chat.text)
+#             except:
+#                 pass
+#         top_earners = TopEarner.objects.all() # Fetch data from the database
+#         for obj in top_earners:
+#             question_to_chat_2 = "Compare the top revenue-generating city with the lowest revenue-generating cities. Give recommendations to the low revenue-generating cities. Print the response only once."
+#             try:
+#                 response_chat_2 = chat.send_message(question_to_chat_2)
+#                 responses2.append(response_chat_2.text)
+#             except:
+#                 pass
+#         return JsonResponse({'responses': responses,"response2":responses2})
+
+#         # except Exception as e:
+#         #     return JsonResponse({'error': str(e)}, status=500)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
